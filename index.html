@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Hub 2026</title>
+    <style>
+        :root { --primary: #00d2ff; --dark: #0f172a; --card: #1e293b; --text: #f8fafc; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--dark); color: var(--text); padding: 20px; line-height: 1.6; }
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+        
+        .filters { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; position: sticky; top: 10px; z-index: 100; }
+        .btn { background: #334155; border: 1px solid #475569; color: white; padding: 10px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+        .btn.active { background: var(--primary); color: #000; font-weight: bold; border-color: var(--primary); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--card); border-radius: 16px; padding: 24px; border: 1px solid #334155; transition: 0.3s ease; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px -10px rgba(0, 210, 255, 0.3); }
+        .card.hidden { display: none; }
+
+        .badge { display: inline-block; background: rgba(0, 210, 255, 0.1); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; width: fit-content; }
+        h3 { margin: 15px 0 10px; font-size: 1.25rem; }
+        .price { font-size: 1.4rem; font-weight: 800; color: #10b981; margin-bottom: 5px; }
+        .meta { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; }
+        .risk { font-size: 0.85rem; padding: 2px 8px; border-radius: 4px; background: #450a0a; color: #f87171; width: fit-content; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🚀 Project Portfolio 2026</h1>
+    <p>Select a filter to bifurcate the list</p>
+</header>
+
+<div class="filters" id="btnContainer">
+    <button class="btn active" onclick="filterSelection('all')">Show All</button>
+    <button class="btn" onclick="filterSelection('low')">Budget (Under ₹5k)</button>
+    <button class="btn" onclick="filterSelection('mid')">Mid Range</button>
+    <button class="btn" onclick="filterSelection('hard')">Expert (⭐⭐⭐⭐)</button>
+</div>
+
+<div class="grid">
+    <div class="card" data-cost="15000" data-hard="true">
+        <span class="badge">Aviation</span>
+        <h3>Small Scale Drone</h3>
+        <p class="price">₹15,000+</p>
+        <p class="meta">Difficulty: ⭐⭐⭐⭐</p>
+        <p class="risk">⚠️ High Risk of Problems</p>
+    </div>
+    <div class="card" data-cost="4500" data-hard="false">
+        <span class="badge">Networking</span>
+        <h3>Meshtastic / LoRa</h3>
+        <p class="price">₹4,500</p>
+        <p class="meta">Difficulty: ⭐⭐⭐</p>
+    </div>
+    <div class="card" data-cost="12000" data-hard="true">
+        <span class="badge">Radio</span>
+        <h3>SDR Projects</h3>
+        <p class="price">₹12,000</p>
+        <p class="meta">Difficulty: ⭐⭐⭐⭐</p>
+        <p class="risk">⚠️ High Risk of Problems</p>
+    </div>
+    <div class="card" data-cost="12000" data-hard="true">
+        <span class="badge">Aerodynamics</span>
+        <h3>Lift/Wing Projects</h3>
+        <p class="price">₹12,000</p>
+        <p class="meta">Difficulty: ⭐⭐⭐⭐</p>
+    </div>
+    <div class="card" data-cost="1000" data-hard="false">
+        <span class="badge">Cybersecurity</span>
+        <h3>Image Encryption</h3>
+        <p class="price">₹1,000</p>
+        <p class="meta">Difficulty: ⭐⭐</p>
+    </div>
+    <div class="card" data-cost="3000" data-hard="false">
+        <span class="badge">Embedded</span>
+        <h3>Multithreading Systems</h3>
+        <p class="price">₹3,000</p>
+        <p class="meta">Difficulty: ⭐⭐⭐</p>
+    </div>
+    <div class="card" data-cost="3500" data-hard="false">
+        <span class="badge">Signals</span>
+        <h3>Coverage Mapping</h3>
+        <p class="price">₹3,500</p>
+        <p class="meta">Difficulty: ⭐⭐</p>
+    </div>
+    <div class="card" data-cost="2500" data-hard="false">
+        <span class="badge">DSP</span>
+        <h3>FFT/Waterfall Spectrum</h3>
+        <p class="price">₹2,500</p>
+        <p class="meta">Difficulty: ⭐⭐</p>
+    </div>
+    <div class="card" data-cost="25000" data-hard="true">
+        <span class="badge">AI/Robotics</span>
+        <h3>AI Combat</h3>
+        <p class="price">₹25,000+</p>
+        <p class="meta">Difficulty: ⭐⭐⭐⭐</p>
+        <p class="risk">⚠️ High Risk of Problems</p>
+    </div>
+</div>
+
+<script>
+    function filterSelection(c) {
+        var x, i;
+        x = document.getElementsByClassName("card");
+        
+        // Update Buttons
+        var btns = document.getElementsByClassName("btn");
+        for (i = 0; i < btns.length; i++) {
+            btns[i].classList.remove("active");
+        }
+        event.currentTarget.classList.add("active");
+
+        for (i = 0; i < x.length; i++) {
+            var cost = parseInt(x[i].getAttribute("data-cost"));
+            var isHard = x[i].getAttribute("data-hard") === "true";
+            
+            x[i].classList.add("hidden");
+            
+            if (c === "all") x[i].classList.remove("hidden");
+            if (c === "low" && cost < 5000) x[i].classList.remove("hidden");
+            if (c === "mid" && cost >= 5000 && cost < 15000) x[i].classList.remove("hidden");
+            if (c === "hard" && isHard) x[i].classList.remove("hidden");
+        }
+    }
+</script>
+
+</body>
+</html>
